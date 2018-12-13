@@ -68,13 +68,25 @@ class SSHRemote:
         ssh.send('football123!')
         ssh.send('\n')
         buff = ''
+        output = []
         ssh.send('cd /root \n')
         ssh.send('ls -l \n')
         while not buff.endswith('# '):
             resp = ssh.recv(9999)
             # buff += resp.decode('UTF8')
-            print((re.compile(r'\x1b.*?m')).sub('',resp.decode('UTF8')))
-            buff += (re.compile(r'\x1b.*?m')).sub('',resp.decode('UTF8'))
+            temp = (re.compile(r'\x1b.*?m')).sub('', resp.decode('UTF8'))
+            buff += temp
+            templist = temp.split('\r\n')
+            # print(templist)
+            if isinstance(templist, list):
+                output += templist
+            else:
+                output.append(temp)
+
+        # for i in output:
+        #     if i.startswith('['):
+        #         print(i)
+        print(output)
         return buff
 
     def loginWAMUser(self):
@@ -93,7 +105,6 @@ class SSHRemote:
         while not buff.endswith('# '):
             resp = ssh.recv(9999)
             # buff += resp.decode('UTF8')
-            print((re.compile(r'\x1b.*?m')).sub('',resp.decode('UTF8')))
             buff += (re.compile(r'\x1b.*?m')).sub('',resp.decode('UTF8'))
         return buff
 
@@ -121,7 +132,6 @@ def getFileList(input_dir=''):
     #     print(line)
     output = ssh_remote.loginUser()
     std_out = ssh_remote.getFileList()
-    print(output.encode('UTF-8'))
     return render_template('index.html', output=output)
 
 
