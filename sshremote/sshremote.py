@@ -127,7 +127,7 @@ def getFileList(input_dir=''):
 
 @app.route('/ssh', methods=['GET', 'POST'])
 def testSSH():
-    test_remote = SSHRemote(host='dvc7721', username='xuxlx', password='ni63sLbd')
+    test_remote = SSHRemote(host='', username='xuxlx', password='')
     test_remote.getSSHConn()
     std_out = test_remote.testFileList()
     return 'a'
