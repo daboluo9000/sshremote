@@ -2,5 +2,20 @@ body {
 
     background-color: #990000;
     color: #FFFFFF;
+    font-family: "Arial";
+    font-size:0.8em;
+    link:"white";
 
+}
+
+a {
+	color:#FFFFFF;
+}
+
+a.containshits {
+	background-color:#FFFFFF;
+}
+
+a:visited {
+	color:#FFFFFF;
 }

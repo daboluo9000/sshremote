@@ -69,7 +69,7 @@ class SSHRemote:
         ssh.send('\n')
         buff = ''
         output = []
-        ssh.send('cd /root \n')
+        ssh.send('cd /lib \n')
         ssh.send('ls -l \n')
         while not buff.endswith('# '):
             resp = ssh.recv(9999)
@@ -83,11 +83,11 @@ class SSHRemote:
             else:
                 output.append(temp)
 
-        # for i in output:
-        #     if i.startswith('['):
-        #         print(i)
-        print(output)
-        return buff
+            outputlist = []
+        for i in range(len(output)):
+            if not (output[i] == '' or output[i].startswith('[') or output[i].startswith('total')):
+                outputlist.append(output[i])
+        return outputlist
 
     def loginWAMUser(self):
         ssh = self.sshClient.invoke_shell()
@@ -132,7 +132,16 @@ def getFileList(input_dir=''):
     #     print(line)
     output = ssh_remote.loginUser()
     std_out = ssh_remote.getFileList()
+    print(output)
     return render_template('index.html', output=output)
+
+
+@app.route('/getlist', methods=['GET', 'POST'])
+@app.route('/getlist/<input_dir>', methods=['GET', 'POST'])
+def getList(input_dir=''):
+    output = ssh_remote.loginUser()
+    return output
+
 
 
 @app.route('/ssh', methods=['GET', 'POST'])

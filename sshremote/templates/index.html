@@ -1,18 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="../static/base.js" type="text/javascript"></script>
-    <script src="../static/jquery.js" type="text/javascript"></script>
-    <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="../static/js/base.js" type="text/javascript"></script>
+    <script src="../static/jquery/jquery.js" type="text/javascript"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet"/>
     <!--<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
 </head>
 <body>
-    {% if output != '' %}
-     <td>
-         <tr>{{output}}</tr>
-     </td>
-    {% endif %}
+<div class="container">
+    <a href="#filelist" id="getfilelist" data-toggle="collapse">Get File List</a>
+    <div id="filelist" class="collapse">
+
+        {% for line in output%}
+
+        <input type="checkbox"> {{ line }}</input><br/>
+
+        {% endfor %}
+    </div>
+</div>
 </body>
 </html>
